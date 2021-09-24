@@ -1,1 +1,7 @@
 # LIPM_walking_controller
+
+1:walking_pattern_generation.cppをコンパイルして実行
+2:CoM_trajectory.cppをコンパイルして実行
+3:leg_trajectory.cppをコンパイルして実行
+4:IK.cppをコンパイルして実行
+5:出来上がった関節軌道データをchoreonoidのsimplecontrollerで読み込んで関節を動かせば歩く
