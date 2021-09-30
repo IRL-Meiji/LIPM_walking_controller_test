@@ -1,4 +1,5 @@
 #include<iostream>
+#include<vector>
 #include<cmath>
 #include<fstream>
 using namespace std;
@@ -14,32 +15,39 @@ T IK_theta2(T x_waist, T z_waist, T x_ankle, T z_ankle, T l_1, T theta_1);
 
 int main(void){
   //以下の座標はワールド座標
-  double xCoM[10000];                               //重心のx座標
-  double zCoM = 0.75;                               //重心の高さ
-  double r = 0.1;                                   //重心と腰リンクの差
-  double zwaist = zCoM - r;                         //腰リンクの高さ
-  double xwaist;                                    //腰リンクのｘ位置
-  double zswing_l[10000];                           //左足首の高さ
-  double xswing_l[10000];                           //左足首のｘ位置
-  double zswing_r[10000];                           //右足首の高さ
-  double xswing_r[10000];                           //右足首の位置
-  double l1 = 0.3;                                 //太ももの長さ
-  double l2 = 0.3;                                 //ひざ下長さ
-  double theta1_l;                                  //左太もも回転角
-  double theta2_l;                                  //左ひざ下回転角
-  double theta3_l;                                  //左足首回転角
-  double theta1_r;                                  //右太もも回転角
-  double theta2_r;                                  //右ひざ下回転角
-  double theta3_r;                                  //右足首回転角
+  //double xCoM[10000];                      //重心のx座標
+  vector<double> xCoM{0};
+  double zCoM = 0.75;                      //重心の高さ
+  double r = 0.1;                          //重心と腰リンクの差
+  double zwaist = zCoM - r;                //腰リンクの高さ
+  double xwaist;                           //腰リンクのｘ位置
+  //double zswing_l[10000];                  //左足首の高さ
+  vector<double> zswing_l{0};
+  //double xswing_l[10000];                  //左足首のｘ位置
+  vector<double> xswing_l{0};
+  //double zswing_r[10000];                  //右足首の高さ
+  vector<double> zswing_r{0};
+  //double xswing_r[10000];                  //右足首の位置
+  vector<double> xswing_r{0};
+  double l1 = 0.3;                         //太ももの長さ
+  double l2 = 0.3;                         //ひざ下長さ
+  double theta1_l;                         //左太もも回転角
+  double theta2_l;                         //左ひざ下回転角
+  double theta3_l;                         //左足首回転角
+  double theta1_r;                         //右太もも回転角
+  double theta2_r;                         //右ひざ下回転角
+  double theta3_r;                         //右足首回転角
   double dummy;
 
   char split;
+  //他のファイルでもそうだが、ここら辺のファイル読み込みは今後書き直す。あまり賢くない。
   ifstream fin1("CoM_trajectory.csv");
   int n=0;
   while(1){
     fin1 >> dummy >> split >> xCoM[n];
     if(fin1.eof()) break;
     n++;
+    xCoM.push_back(0);
   }
   n = 0;
   ifstream fin2("leg_trajectory.csv");
@@ -47,6 +55,10 @@ int main(void){
     fin2 >> dummy >> split >> xswing_r[n] >> split >> zswing_r[n] >> split >> xswing_l[n] >> split >> zswing_l[n];
     if(fin2.eof()) break;
     n++;
+    xswing_r.push_back(0);
+    zswing_r.push_back(0);
+    xswing_l.push_back(0);
+    zswing_l.push_back(0);
   }
 
   ofstream ofs;
